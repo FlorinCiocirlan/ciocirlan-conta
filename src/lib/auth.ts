@@ -16,11 +16,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: '/login',
   },
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
         email: { label: 'Email', type: 'email' },
-        password: { label: 'Parolă', type: 'password' },
+        password: { label: 'Parol\u0103', type: 'password' },
       },
       async authorize(credentials) {
         const parsed = credentialsSchema.safeParse(credentials);
