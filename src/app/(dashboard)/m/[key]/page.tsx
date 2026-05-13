@@ -14,7 +14,8 @@ export default async function MonthPage({
   params: Promise<{ key: string }>;
 }) {
   const session = await auth();
-  if (!session?.user) redirect('/login');
+  if (!session?.user?.id) redirect('/login');
+  const userId = session.user.id;
 
   const { key } = await params;
   const monthStart = parseMonthKey(key);
@@ -23,7 +24,7 @@ export default async function MonthPage({
   const current = currentMonthStart();
   if (monthStart.getTime() > current.getTime()) notFound();
 
-  const month = await ensureMonth(session.user.id, monthStart);
+  const month = await ensureMonth(userId, monthStart);
   const grouped = await getDocumentsByCategory(month.id);
 
   const isCurrent = monthStart.getTime() === current.getTime();

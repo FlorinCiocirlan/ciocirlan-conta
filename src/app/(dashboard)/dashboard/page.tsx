@@ -8,9 +8,10 @@ import { FileText, ArrowUpRight } from 'lucide-react';
 
 export default async function DashboardPage() {
   const session = await auth();
-  if (!session?.user) redirect('/login');
+  if (!session?.user?.id) redirect('/login');
+  const userId = session.user.id;
 
-  const monthsList = await listMonths(session.user.id);
+  const monthsList = await listMonths(userId);
   const totalDocs = monthsList.reduce((acc, m) => acc + Number(m.docCount), 0);
   const totalSize = monthsList.reduce((acc, m) => acc + Number(m.totalSize), 0);
 

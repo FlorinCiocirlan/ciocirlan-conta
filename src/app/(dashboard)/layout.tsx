@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
-  if (!session?.user) redirect('/login');
+  if (!session?.user?.id) redirect('/login');
 
   return (
     <div className="min-h-screen flex flex-col">
